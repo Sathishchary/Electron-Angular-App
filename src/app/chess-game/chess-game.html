@@ -1,0 +1,14 @@
+<div class="controls">
+  <button (click)="resetBoard()">Reset</button>
+</div>
+<div class="board">
+  <div *ngFor="let row of board; let y = index" class="row">
+    <div *ngFor="let cell of row; let x = index"
+         class="square"
+         [class.black]="(x + y) % 2 === 1"
+         [class.selected]="selected?.x === x && selected?.y === y"
+         (click)="onSquareClick(x, y)">
+      {{ getPieceSymbol(cell) }}
+    </div>
+  </div>
+</div>
