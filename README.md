@@ -1,48 +1,59 @@
-Chess Game: Basic Rules and Strategy
-* In Chess
-Two players alternate turns, moving one piece at a time, aiming to checkmate the opponent's king.
-Each piece moves according to specific rules. The objective is to control the board and ultimately
-capture the opponent's king.
-* Basic Rules and Setup
-- Board:
-An 8x8 grid with alternating light and dark squares.
-- Setup:
-Each player has 16 pieces: 1 king, 1 queen, 2 rooks, 2 bishops, 2 knights, and 8 pawns.
-- Placement:
-Pieces are placed on the first two ranks from each player's view. The queen is placed on a square
-matching her color.
-- Starting:
-White moves first. Players alternate turns.
-* Piece Movement
-- Pawn:
-Moves one square forward (two on its first move), captures diagonally.
-- Rook:
-Moves horizontally or vertically any number of squares.
-- Knight:
-Moves in an "L" shape: two squares in one direction, then one square perpendicular.
-- Bishop:
-Moves diagonally any number of squares.
-- Queen:
-Moves like both rook and bishop - horizontally, vertically, or diagonally.
-- King:
-Moves one square in any direction.
-* Capturing
-Pieces capture by landing on a square occupied by an opponent's piece. Pawns capture diagonally.
-The king cannot be captured, only checked.
-* Special Moves
-- Castling:
-A defensive move involving both the king and a rook. It improves safety and connects the rooks.
-- Pawn Promotion:
-When a pawn reaches the 8th rank, it can be promoted to any other piece (except king).
-* Winning the Game
-- Checkmate:
-The king is in check and has no legal moves to escape.
-- Resignation or Draw:
-Players may resign or agree to a draw. Stalemate is also a draw.
-* Key Strategies
-- Control the Center:
-Dominate the central squares (d4, d5, e4, e5) for maximum mobility.
-- Develop Pieces Early:
-Activate knights and bishops early for strong positions.
-- Protect the King:
-Castle early and avoid exposing your king or queen prematurely
+# ElectronAngualrApp
+
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.0.
+
+## Development server
+
+To start a local development server, run:
+
+```bash
+ng serve
+```
+
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+## Code scaffolding
+
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+
+```bash
+ng generate component component-name
+```
+
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+
+```bash
+ng generate --help
+```
+
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
