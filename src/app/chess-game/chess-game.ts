@@ -2,7 +2,10 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-export type Piece = 'r'|'n'|'b'|'q'|'k'|'p'|'R'|'N'|'B'|'Q'|'K'|'P'|'';
+export type Piece =
+  | 'r' | 'n' | 'b' | 'q' | 'k' | 'p'
+  | 'R' | 'N' | 'B' | 'Q' | 'K' | 'P'
+  | '';
 export interface Position { x: number; y: number; }
 export interface Move { from: Position; to: Position; piece: Piece; capture?: Piece; }
 
@@ -19,7 +22,6 @@ export class ChessGame implements OnInit, OnChanges {
   currentPlayer: 'white' | 'black' = 'white';
   @Input() vsComputer = false;
   @Input() computerColor: 'white' | 'black' = 'black';
-
 
   ngOnInit() {
     this.resetBoard();
@@ -146,11 +148,11 @@ export class ChessGame implements OnInit, OnChanges {
       case 'p':
         if (this.board[y + dir]?.[x] === '') {
           addMove(x, y + dir);
-          if (y === startRow && this.board[y + dir*2]?.[x] === '') {
-            addMove(x, y + dir*2);
+          if (y === startRow && this.board[y + dir * 2]?.[x] === '') {
+            addMove(x, y + dir * 2);
           }
         }
-        [x-1, x+1].forEach(nx => {
+        [x - 1, x + 1].forEach(nx => {
           if (enemyCheck(this.board[y + dir]?.[nx])) {
             addMove(nx, y + dir);
           }
@@ -188,9 +190,9 @@ export class ChessGame implements OnInit, OnChanges {
   }
 
   rayMoves(x: number, y: number, dirs: number[][], add: (nx: number, ny: number) => void, enemyCheck: (p: Piece) => boolean) {
-    for (const [dx,dy] of dirs) {
+    for (const [dx, dy] of dirs) {
       let nx = x + dx, ny = y + dy;
-      while (nx >=0 && nx < 8 && ny >=0 && ny <8) {
+      while (nx >= 0 && nx < 8 && ny >= 0 && ny < 8) {
         const target = this.board[ny][nx];
         if (target === '') {
           add(nx, ny);
@@ -198,9 +200,9 @@ export class ChessGame implements OnInit, OnChanges {
           if (enemyCheck(target)) add(nx, ny);
           break;
         }
-        nx += dx; ny += dy;
+        nx += dx;
+        ny += dy;
       }
     }
   }
 }
-
