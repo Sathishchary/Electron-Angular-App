@@ -20,6 +20,14 @@ export class ChessGame {
   vsComputer = false;
   computerColor: 'white' | 'black' = 'black';
 
+  onVsComputerChange() {
+    this.maybeComputerMove();
+  }
+
+  onComputerColorChange() {
+    this.maybeComputerMove();
+  }
+
   ngOnInit() {
     this.resetBoard();
   }
@@ -37,6 +45,7 @@ export class ChessGame {
     ];
     this.currentPlayer = 'white';
     this.selected = null;
+    this.maybeComputerMove();
   }
 
   isWhite(piece: Piece) { return piece !== '' && piece === piece.toUpperCase(); }
@@ -71,9 +80,7 @@ export class ChessGame {
       if (moves.some(m => m.to.x === x && m.to.y === y)) {
         this.makeMove(this.selected, {x, y});
         this.selected = null;
-        if (this.vsComputer && this.currentPlayer === this.computerColor) {
-          this.makeComputerMove();
-        }
+        this.maybeComputerMove();
         return;
       }
     }
@@ -96,6 +103,12 @@ export class ChessGame {
     if (moves.length === 0) return;
     const move = moves[Math.floor(Math.random() * moves.length)];
     this.makeMove(move.from, move.to);
+  }
+
+  maybeComputerMove() {
+    if (this.vsComputer && this.currentPlayer === this.computerColor) {
+      this.makeComputerMove();
+    }
   }
 
   getAllMoves(color: 'white' | 'black'): Move[] {
