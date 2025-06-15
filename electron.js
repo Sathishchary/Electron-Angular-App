@@ -11,7 +11,13 @@ function createWindow() {
     }
   });
 
-  const indexPath = path.join(__dirname, 'dist/Electron-Angualr-App/browser/index.html');
+  const indexPath = path.join(
+    __dirname,
+    'dist',
+    'Electron-Angualr-App',
+    'browser',
+    'index.html'
+  );
   win.loadFile(indexPath);
 }
 
