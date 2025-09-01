@@ -1,0 +1,10 @@
+<div #chartContainer 
+     [id]="chartId" 
+     class="chart-container"
+     [style.width]="width"
+     [style.height]="height">
+  <!-- Chart will be rendered here by Google Charts -->
+  <div class="loading-message" *ngIf="!isGoogleChartsLoaded">
+    Loading chart...
+  </div>
+</div>
