@@ -1,3 +1,16 @@
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+main {
+  min-height: calc(100vh - 64px);
+  background-color: #f5f5f5;
+}
+
+mat-toolbar button {
+  margin-left: 8px;
+
 * {
   margin: 0;
   padding: 0;
@@ -278,4 +291,5 @@ body {
 
 .btn-danger:hover:not(:disabled) {
   background-color: #c82333;
+
 }

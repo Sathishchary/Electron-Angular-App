@@ -1,3 +1,21 @@
+
+<mat-toolbar color="primary">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/dashboard">
+    <mat-icon>dashboard</mat-icon>
+    Dashboard
+  </button>
+  <button mat-button routerLink="/chess">
+    <mat-icon>sports_esports</mat-icon>
+    Chess Game
+  </button>
+</mat-toolbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+=======
 <div class="app-container">
   <!-- Header -->
   <header class="header">
@@ -52,3 +70,4 @@
     <router-outlet></router-outlet>
   </main>
 </div>
+
