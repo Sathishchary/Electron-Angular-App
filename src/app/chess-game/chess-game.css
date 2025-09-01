@@ -24,4 +24,21 @@
 }
 .controls {
   margin-bottom: 10px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.analytics-link {
+  background: #3f51b5;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.analytics-link:hover {
+  background: #303f9f;
 }
