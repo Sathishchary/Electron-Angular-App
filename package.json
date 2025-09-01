@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
+    "start:dev": "concurrently \"npm run backend:start\" \"npm run start\"",
+    "backend:start": "cd backend && mvn spring-boot:run",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "electron": "npm run build && electron ."
+    "electron": "npm run build && electron .",
+    "electron:dev": "NODE_ENV=development electron ."
   },
   "private": true,
   "dependencies": {
@@ -28,6 +31,7 @@
     "@angular/cli": "^20.0.0",
     "@angular/compiler-cli": "^20.0.0",
     "@types/jasmine": "~5.1.0",
+    "concurrently": "^7.6.0",
     "electron": "^36.4.0",
     "jasmine-core": "~5.7.0",
     "karma": "~6.4.0",
