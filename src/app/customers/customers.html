@@ -1,0 +1,97 @@
+<div class="customers-page">
+  <div class="header">
+    <h2>Customers Management</h2>
+    <button class="btn btn-primary" (click)="openAddModal()">Add Customer</button>
+  </div>
+
+  <!-- Customers Table -->
+  <div class="table-container">
+    <table class="customers-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>
+            <span class="status-badge" [class]="'status-' + customer.status.toLowerCase()">
+              {{ customer.status }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-secondary" (click)="openEditModal(customer)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteCustomer(customer)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="customers.length === 0" class="no-data">
+      No customers found. <a href="#" (click)="openAddModal()">Add the first customer</a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" [class.show]="showModal" *ngIf="showModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ editingCustomer ? 'Edit Customer' : 'Add Customer' }}</h3>
+        <button class="close-btn" (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveCustomer()" #customerForm="ngForm">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input 
+              type="text" 
+              id="name" 
+              [(ngModel)]="formCustomer.name" 
+              name="name" 
+              required 
+              class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input 
+              type="email" 
+              id="email" 
+              [(ngModel)]="formCustomer.email" 
+              name="email" 
+              required 
+              class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="status">Status:</label>
+            <select 
+              id="status" 
+              [(ngModel)]="formCustomer.status" 
+              name="status" 
+              required 
+              class="form-control">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!customerForm.form.valid">
+              {{ editingCustomer ? 'Update' : 'Add' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
