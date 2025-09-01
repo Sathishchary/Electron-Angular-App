@@ -1,0 +1,60 @@
+<mat-toolbar color="primary">
+  <span>Analytics Dashboard</span>
+</mat-toolbar>
+
+<div class="dashboard-container">
+  <mat-grid-list cols="2" rowHeight="400px" gutterSize="16px">
+    
+    <!-- Bar Chart Card -->
+    <mat-grid-tile colspan="2">
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>{{ charts[0].title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-chart 
+            [chartType]="charts[0].type"
+            [chartData]="charts[0].data"
+            [chartOptions]="charts[0].options"
+            [chartId]="charts[0].id">
+          </app-chart>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <!-- Pie Chart Card -->
+    <mat-grid-tile>
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>{{ charts[1].title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-chart 
+            [chartType]="charts[1].type"
+            [chartData]="charts[1].data"
+            [chartOptions]="charts[1].options"
+            [chartId]="charts[1].id">
+          </app-chart>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <!-- Line Chart Card -->
+    <mat-grid-tile>
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>{{ charts[2].title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-chart 
+            [chartType]="charts[2].type"
+            [chartData]="charts[2].data"
+            [chartOptions]="charts[2].options"
+            [chartId]="charts[2].id">
+          </app-chart>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>

@@ -1,1 +1,12 @@
+<mat-toolbar color="primary">
+  <span>{{ title }}</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/dashboard" routerLinkActive="active-link">
+    Dashboard
+  </button>
+  <button mat-button routerLink="/chess" routerLinkActive="active-link">
+    Chess Game
+  </button>
+</mat-toolbar>
+
 <router-outlet></router-outlet>

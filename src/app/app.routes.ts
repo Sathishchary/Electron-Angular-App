@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { ChessGame } from './chess-game/chess-game';
+import { Dashboard } from './dashboard/dashboard';
 
 export const routes: Routes = [
-  { path: '', component: ChessGame }
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: Dashboard },
+  { path: 'chess', component: ChessGame }
 ];
