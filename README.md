@@ -1,59 +1,149 @@
-# ElectronAngualrApp
+# Electron-Angular-App
+
+A modern Angular application with Electron shell featuring dashboard analytics, user management, customer management, and an interactive chess game.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.0.
 
-## Development server
+## Features
 
-To start a local development server, run:
+### 📊 Dashboard
+- Summary metrics cards showing total users and customers
+- Interactive Google Charts displaying data analytics
+- Responsive card-based layout
+
+### 👥 Users Management
+- Complete CRUD operations (Create, Read, Update, Delete)
+- User roles: Admin, Manager, User
+- Modal-based forms for adding/editing users
+- Real-time data updates
+
+### 🏢 Customers Management
+- Complete CRUD operations for customer data
+- Customer status tracking: Active, Inactive, Pending
+- Professional table interface with action buttons
+- Status-based color coding
+
+### ♗ Chess Game
+- Interactive chess game (original feature)
+- Play against computer option
+- Full chess piece movement validation
+
+### 🧭 Navigation
+- Responsive sidebar navigation
+- Mobile-friendly hamburger menu
+- Active page highlighting
+- Smooth transitions and animations
+
+## Quick Start
+
+### Development Server
+
+To start the local development server:
 
 ```bash
-ng serve
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to `http://localhost:4200/` to view the application. The app will automatically reload when you make changes.
 
-## Code scaffolding
+### Electron Desktop App
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+To run as a desktop application:
 
 ```bash
-ng generate component component-name
+npm run electron
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+This will build the Angular app and launch it in an Electron window.
 
+## Project Structure
+
+```
+src/app/
+├── components/
+│   ├── dashboard/          # Dashboard with metrics and charts
+│   ├── users/             # User management CRUD
+│   ├── customers/         # Customer management CRUD
+│   ├── chess-game/        # Chess game component
+│   └── shared/
+│       └── chart/         # Reusable Google Charts component
+├── services/
+│   ├── users.ts           # User data management service
+│   └── customers.ts       # Customer data management service
+├── models/
+│   ├── user.model.ts      # User interface definition
+│   └── customer.model.ts  # Customer interface definition
+└── app.routes.ts          # Application routing configuration
+```
+
+## Dependencies
+
+### Core Dependencies
+- **Angular 20** - Latest Angular framework
+- **angular-google-charts** - Google Charts integration
+- **Electron** - Desktop app framework
+- **RxJS** - Reactive programming
+
+### Key Features Implementation
+- **Standalone Components** - Modern Angular architecture
+- **Reactive Forms** - Form validation and data binding
+- **Observable Data Services** - Real-time data management
+- **Responsive Design** - Mobile and desktop compatible
+
+## Development
+
+### Code Scaffolding
+
+Generate new components:
 ```bash
-ng generate --help
+ng generate component component-name --standalone
 ```
 
-## Building
+Generate services:
+```bash
+ng generate service services/service-name
+```
 
-To build the project run:
+### Building
 
+Build for production:
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+### Testing
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+Run unit tests:
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Data Management
 
-For end-to-end (e2e) testing, run:
+The application uses mock services for data storage that can easily be replaced with real backend APIs:
 
-```bash
-ng e2e
-```
+- **UsersService** - Manages user data with role-based access
+- **CustomersService** - Handles customer information and status tracking
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Both services implement full CRUD operations and use RxJS Observables for reactive data updates.
+
+## Electron Integration
+
+The app is fully compatible with Electron and includes:
+- Proper window configuration
+- File path resolution for production builds
+- Cross-platform desktop deployment
+
+## Browser Compatibility
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
 ## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+For more information on Angular CLI commands: [Angular CLI Reference](https://angular.dev/tools/cli)
