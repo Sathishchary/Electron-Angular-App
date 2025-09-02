@@ -1,0 +1,138 @@
+<div class="customer-analytics">
+  <h1>Customer Analytics Dashboard</h1>
+  
+  <!-- Key Metrics Cards -->
+  <div class="metrics-grid" *ngIf="!loading">
+    <mat-card class="metric-card">
+      <mat-card-header>
+        <mat-card-title>Total Customers</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="metric-value">{{analyticsData.totalCustomers | number}}</div>
+        <div class="metric-subtitle">{{analyticsData.activeCustomers | number}} active</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-header>
+        <mat-card-title>New Acquisitions</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="metric-value">{{analyticsData.newAcquisitions | number}}</div>
+        <div class="metric-subtitle">This month</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-header>
+        <mat-card-title>Churn Rate</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="metric-value churn-rate">{{analyticsData.churnRate}}%</div>
+        <div class="metric-subtitle">Below target of 5%</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-grid" *ngIf="!loading">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Customer Acquisition vs Churn</mat-card-title>
+        <mat-card-subtitle>Monthly new customers and churned customers</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div #acquisitionChart class="chart-container"></div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Monthly Revenue</mat-card-title>
+        <mat-card-subtitle>Revenue trend from customer subscriptions</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div #revenueChart class="chart-container"></div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Regional Distribution</mat-card-title>
+        <mat-card-subtitle>Customer distribution by geographic region</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div #regionChart class="chart-container"></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Customer Details Table -->
+  <mat-card class="table-card" *ngIf="!loading">
+    <mat-card-header>
+      <mat-card-title>Customer Details</mat-card-title>
+      <mat-card-subtitle>Detailed customer information and engagement metrics</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="customerList" class="customer-table">
+        
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let customer"> {{customer.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="companyName">
+          <th mat-header-cell *matHeaderCellDef> Company </th>
+          <td mat-cell *matCellDef="let customer"> {{customer.companyName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contactEmail">
+          <th mat-header-cell *matHeaderCellDef> Contact Email </th>
+          <td mat-cell *matCellDef="let customer"> {{customer.contactEmail}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acquisitionDate">
+          <th mat-header-cell *matHeaderCellDef> Acquisition Date </th>
+          <td mat-cell *matCellDef="let customer"> {{formatDate(customer.acquisitionDate)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="region">
+          <th mat-header-cell *matHeaderCellDef> Region </th>
+          <td mat-cell *matCellDef="let customer"> {{customer.region}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tier">
+          <th mat-header-cell *matHeaderCellDef> Tier </th>
+          <td mat-cell *matCellDef="let customer"> 
+            <mat-chip [style.background-color]="getTierColor(customer.tier)" [style.color]="'white'">
+              {{customer.tier | titlecase}}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="churnRisk">
+          <th mat-header-cell *matHeaderCellDef> Churn Risk </th>
+          <td mat-cell *matCellDef="let customer"> 
+            <mat-chip [color]="getChurnRiskColor(customer.churnRisk)">
+              {{customer.churnRisk | titlecase}}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="monthlyRevenue">
+          <th mat-header-cell *matHeaderCellDef> Monthly Revenue </th>
+          <td mat-cell *matCellDef="let customer"> {{formatCurrency(customer.monthlyRevenue)}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+    <p>Loading customer analytics...</p>
+  </div>
+</div>

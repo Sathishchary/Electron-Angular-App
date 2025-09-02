@@ -1,0 +1,224 @@
+<div class="system-health">
+  <h1>System Health Dashboard</h1>
+  <p class="page-description">Monitor API performance, uptime, and system reliability metrics</p>
+  
+  <!-- System Status Banner -->
+  <mat-card class="status-banner" *ngIf="!loading" [style.border-left]="'4px solid ' + getSystemStatus().color">
+    <mat-card-content>
+      <div class="status-content">
+        <mat-icon [style.color]="getSystemStatus().color">{{getSystemStatus().icon}}</mat-icon>
+        <div class="status-info">
+          <h2>System Status: <span [style.color]="getSystemStatus().color">{{getSystemStatus().status}}</span></h2>
+          <p>All critical systems are operational</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Key Metrics Cards -->
+  <div class="metrics-grid" *ngIf="!loading">
+    <mat-card class="metric-card uptime">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>cloud_done</mat-icon>
+          System Uptime
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="metric-value" [style.color]="getUptimeColor()">{{analyticsData.uptime}}%</div>
+        <mat-progress-bar 
+          mode="determinate" 
+          [value]="analyticsData.uptime"
+          [color]="analyticsData.uptime >= 99.5 ? 'primary' : 'warn'">
+        </mat-progress-bar>
+        <div class="metric-subtitle">Last 30 days</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card requests">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>api</mat-icon>
+          Total Requests
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="metric-value">{{analyticsData.totalRequests | number}}</div>
+        <div class="metric-subtitle">This month</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card error-rate">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>error_outline</mat-icon>
+          Error Rate
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="metric-value" [style.color]="getErrorRateColor()">{{analyticsData.errorRate}}%</div>
+        <div class="metric-subtitle">Below 0.5% target</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card response-time">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>speed</mat-icon>
+          Avg Response Time
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="metric-value" [style.color]="getResponseTimeColor()">{{analyticsData.avgResponseTime}}ms</div>
+        <div class="metric-subtitle">24-hour average</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-grid" *ngIf="!loading">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>API Usage and Error Trends</mat-card-title>
+        <mat-card-subtitle>Request volume and error patterns over time</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div #apiUsageChart class="chart-container"></div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Response Time Performance</mat-card-title>
+        <mat-card-subtitle>Average response time trends throughout the day</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div #performanceChart class="chart-container"></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- System Components Status -->
+  <div class="components-grid" *ngIf="!loading">
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>storage</mat-icon>
+          Database
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="component-status operational">
+          <mat-icon>check_circle</mat-icon>
+          <span>Operational</span>
+        </div>
+        <div class="component-details">
+          <p>Response Time: <strong>15ms</strong></p>
+          <p>Connections: <strong>245/500</strong></p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>cloud</mat-icon>
+          API Gateway
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="component-status operational">
+          <mat-icon>check_circle</mat-icon>
+          <span>Operational</span>
+        </div>
+        <div class="component-details">
+          <p>Load: <strong>67%</strong></p>
+          <p>Rate Limit: <strong>1,250/min</strong></p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>memory</mat-icon>
+          Cache Layer
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="component-status operational">
+          <mat-icon>check_circle</mat-icon>
+          <span>Operational</span>
+        </div>
+        <div class="component-details">
+          <p>Hit Rate: <strong>94.2%</strong></p>
+          <p>Memory Usage: <strong>2.1GB/4GB</strong></p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="component-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>security</mat-icon>
+          Authentication
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="component-status operational">
+          <mat-icon>check_circle</mat-icon>
+          <span>Operational</span>
+        </div>
+        <div class="component-details">
+          <p>Success Rate: <strong>99.8%</strong></p>
+          <p>Active Sessions: <strong>1,458</strong></p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Alerts and Notifications -->
+  <mat-card class="alerts-card" *ngIf="!loading">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>notifications</mat-icon>
+        Recent Alerts
+      </mat-card-title>
+      <mat-card-subtitle>System notifications and alerts from the last 24 hours</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="alert-item resolved">
+        <mat-icon>check_circle</mat-icon>
+        <div class="alert-content">
+          <h4>High Response Time Alert - Resolved</h4>
+          <p>API response times returned to normal levels</p>
+          <span class="alert-time">2 hours ago</span>
+        </div>
+      </div>
+
+      <div class="alert-item info">
+        <mat-icon>info</mat-icon>
+        <div class="alert-content">
+          <h4>Scheduled Maintenance Completed</h4>
+          <p>Database optimization completed successfully</p>
+          <span class="alert-time">6 hours ago</span>
+        </div>
+      </div>
+
+      <div class="alert-item success">
+        <mat-icon>trending_up</mat-icon>
+        <div class="alert-content">
+          <h4>Performance Improvement</h4>
+          <p>Cache hit rate improved to 94.2%</p>
+          <span class="alert-time">12 hours ago</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+    <p>Loading system health data...</p>
+  </div>
+</div>

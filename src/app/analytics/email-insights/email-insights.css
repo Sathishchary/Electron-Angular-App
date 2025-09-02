@@ -1,0 +1,156 @@
+.email-insights {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+
+.page-description {
+  color: #666;
+  margin-bottom: 24px;
+  font-size: 1.1em;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #3f51b5;
+  margin: 8px 0;
+}
+
+.metric-subtitle {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.chart-card {
+  min-height: 400px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px;
+}
+
+.table-card {
+  margin-bottom: 24px;
+}
+
+.domain-table {
+  width: 100%;
+}
+
+.domain-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.domain-info mat-icon {
+  color: #666;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.insight-card .mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.insight-card .mat-card-title mat-icon {
+  color: #3f51b5;
+}
+
+.insights-list, .recommendations-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.insights-list li, .recommendations-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 8px;
+  border-radius: 4px;
+  background: #f8f9fa;
+}
+
+.insights-list mat-icon {
+  color: #4caf50;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.recommendations-list mat-icon {
+  color: #ff9800;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-card {
+    min-height: 350px;
+  }
+  
+  .domain-table {
+    font-size: 0.9em;
+  }
+}

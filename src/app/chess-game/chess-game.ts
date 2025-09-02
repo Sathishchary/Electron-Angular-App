@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 export type Piece = 'r'|'n'|'b'|'q'|'k'|'p'|'R'|'N'|'B'|'Q'|'K'|'P'|'';
 export interface Position { x: number; y: number; }
@@ -9,7 +10,7 @@ export interface Move { from: Position; to: Position; piece: Piece; capture?: Pi
 @Component({
   selector: 'chess-game',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './chess-game.html',
   styleUrls: ['./chess-game.css']
 })
