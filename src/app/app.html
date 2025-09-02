@@ -1,1 +1,73 @@
-<router-outlet></router-outlet>
+
+<mat-toolbar color="primary">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/dashboard">
+    <mat-icon>dashboard</mat-icon>
+    Dashboard
+  </button>
+  <button mat-button routerLink="/chess">
+    <mat-icon>sports_esports</mat-icon>
+    Chess Game
+  </button>
+</mat-toolbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+=======
+<div class="app-container">
+  <!-- Header -->
+  <header class="header">
+    <button class="menu-toggle" (click)="toggleSidebar()">
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+    </button>
+    <h1>{{ title }}</h1>
+  </header>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" [class.open]="sidebarOpen">
+    <div class="sidebar-content">
+      <div class="nav-section">
+        <h3>Navigation</h3>
+        <ul class="nav-menu">
+          <li>
+            <a routerLink="/dashboard" routerLinkActive="active" (click)="sidebarOpen = false">
+              <span class="nav-icon">📊</span>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a routerLink="/users" routerLinkActive="active" (click)="sidebarOpen = false">
+              <span class="nav-icon">👥</span>
+              Users
+            </a>
+          </li>
+          <li>
+            <a routerLink="/customers" routerLinkActive="active" (click)="sidebarOpen = false">
+              <span class="nav-icon">🏢</span>
+              Customers
+            </a>
+          </li>
+          <li>
+            <a routerLink="/chess" routerLinkActive="active" (click)="sidebarOpen = false">
+              <span class="nav-icon">♗</span>
+              Chess Game
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Overlay for mobile -->
+  <div class="sidebar-overlay" [class.show]="sidebarOpen" (click)="sidebarOpen = false"></div>
+
+  <!-- Main Content -->
+  <main class="main-content" [class.sidebar-open]="sidebarOpen">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+

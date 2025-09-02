@@ -1,0 +1,11 @@
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  department: string;
+  role: string;
+  status: 'active' | 'inactive';
+  createdAt: Date;
+  updatedAt: Date;
+}
