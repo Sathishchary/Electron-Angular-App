@@ -1,0 +1,249 @@
+<div class="editor-container">
+  <!-- Top Toolbar -->
+  <mat-toolbar color="primary" class="editor-toolbar">
+    <span class="document-title">{{ fileName }}</span>
+    <span class="spacer"></span>
+    
+    <!-- File Operations -->
+    <button mat-icon-button (click)="triggerFileUpload()" matTooltip="Open File">
+      <mat-icon>folder_open</mat-icon>
+    </button>
+    
+    <button mat-icon-button (click)="saveDocument()" [disabled]="!currentDocumentType" matTooltip="Save">
+      <mat-icon>save</mat-icon>
+    </button>
+    
+    <!-- Export Options -->
+    <button mat-button [matMenuTriggerFor]="exportMenu" [disabled]="!currentDocumentType">
+      <mat-icon>download</mat-icon>
+      Export
+    </button>
+    
+    <input #fileInput type="file" accept=".docx,.doc,.xlsx,.xls,.pptx,.ppt" 
+           (change)="onFileSelected($event)" style="display: none;">
+  </mat-toolbar>
+
+  <!-- Document Type Selection -->
+  <div class="document-type-selector" *ngIf="!currentDocumentType">
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <mat-card-title>Document Editor</mat-card-title>
+        <mat-card-subtitle>Create or open documents, spreadsheets, and presentations</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="document-options">
+          <button mat-raised-button color="primary" (click)="createNewDocument('word')" class="doc-option">
+            <mat-icon>description</mat-icon>
+            <span>Word Document</span>
+          </button>
+          
+          <button mat-raised-button color="primary" (click)="createNewDocument('excel')" class="doc-option">
+            <mat-icon>table_chart</mat-icon>
+            <span>Excel Spreadsheet</span>
+          </button>
+          
+          <button mat-raised-button color="primary" (click)="createNewDocument('presentation')" class="doc-option">
+            <mat-icon>slideshow</mat-icon>
+            <span>PowerPoint Presentation</span>
+          </button>
+        </div>
+        
+        <div class="or-divider">
+          <span>OR</span>
+        </div>
+        
+        <button mat-stroked-button (click)="triggerFileUpload()" class="upload-btn">
+          <mat-icon>upload_file</mat-icon>
+          Open Existing Document
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Editor Content -->
+  <div class="editor-content" *ngIf="currentDocumentType" [ngSwitch]="currentDocumentType">
+    
+    <!-- Word Editor -->
+    <div *ngSwitchCase="'word'" class="word-editor">
+      <!-- Word Toolbar -->
+      <mat-toolbar class="formatting-toolbar">
+        <button mat-icon-button (click)="formatText('bold')" matTooltip="Bold">
+          <mat-icon>format_bold</mat-icon>
+        </button>
+        <button mat-icon-button (click)="formatText('italic')" matTooltip="Italic">
+          <mat-icon>format_italic</mat-icon>
+        </button>
+        <button mat-icon-button (click)="formatText('underline')" matTooltip="Underline">
+          <mat-icon>format_underlined</mat-icon>
+        </button>
+        
+        <mat-divider [vertical]="true"></mat-divider>
+        
+        <button mat-icon-button (click)="formatText('justifyLeft')" matTooltip="Align Left">
+          <mat-icon>format_align_left</mat-icon>
+        </button>
+        <button mat-icon-button (click)="formatText('justifyCenter')" matTooltip="Align Center">
+          <mat-icon>format_align_center</mat-icon>
+        </button>
+        <button mat-icon-button (click)="formatText('justifyRight')" matTooltip="Align Right">
+          <mat-icon>format_align_right</mat-icon>
+        </button>
+        
+        <mat-divider [vertical]="true"></mat-divider>
+        
+        <button mat-icon-button (click)="formatText('insertUnorderedList')" matTooltip="Bullet List">
+          <mat-icon>format_list_bulleted</mat-icon>
+        </button>
+        <button mat-icon-button (click)="formatText('insertOrderedList')" matTooltip="Numbered List">
+          <mat-icon>format_list_numbered</mat-icon>
+        </button>
+      </mat-toolbar>
+      
+      <div class="word-document">
+        <div #wordEditor contenteditable="true" class="word-content" 
+             [innerHTML]="wordContent"></div>
+      </div>
+    </div>
+
+    <!-- Excel Editor -->
+    <div *ngSwitchCase="'excel'" class="excel-editor">
+      <!-- Excel Toolbar -->
+      <mat-toolbar class="excel-toolbar">
+        <button mat-icon-button (click)="addRow()" matTooltip="Add Row">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button (click)="addColumn()" matTooltip="Add Column">
+          <mat-icon>view_column</mat-icon>
+        </button>
+        
+        <span class="spacer"></span>
+        
+        <button mat-button (click)="exportDocument('csv')">
+          <mat-icon>download</mat-icon>
+          Export CSV
+        </button>
+      </mat-toolbar>
+      
+      <div #excelContainer class="excel-container">
+        <table class="excel-table">
+          <thead>
+            <tr>
+              <th class="row-header"></th>
+              <th *ngFor="let col of excelData[0]; let colIndex = index" class="column-header">
+                {{ getColumnName(colIndex) }}
+                <button mat-icon-button class="delete-col-btn" (click)="deleteColumn(colIndex)"
+                        [disabled]="(excelData[0]?.length || 0) <= 1">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of excelData; let rowIndex = index">
+              <td class="row-header">
+                {{ rowIndex + 1 }}
+                <button mat-icon-button class="delete-row-btn" (click)="deleteRow(rowIndex)"
+                        [disabled]="excelData.length <= 1">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </td>
+              <td *ngFor="let cell of row; let colIndex = index" class="excel-cell">
+                <input type="text" [value]="cell" 
+                       (input)="onCellInput($event, rowIndex, colIndex)"
+                       class="cell-input">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Presentation Editor -->
+    <div *ngSwitchCase="'presentation'" class="presentation-editor">
+      <div class="presentation-layout">
+        <!-- Slide Navigation -->
+        <div class="slide-navigation">
+          <div class="slide-nav-header">
+            <h3>Slides</h3>
+            <button mat-icon-button (click)="addSlide()" matTooltip="Add Slide">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          
+          <div class="slide-thumbnails">
+            <div *ngFor="let slide of slides; let i = index" 
+                 class="slide-thumbnail" 
+                 [class.active]="i === currentSlideIndex"
+                 (click)="selectSlide(i)">
+              <div class="thumbnail-content" [style.background-color]="slide.backgroundColor">
+                <div class="thumbnail-title">{{ slide.title }}</div>
+                <button mat-icon-button class="delete-slide-btn" (click)="deleteSlide(i)"
+                        [disabled]="slides.length <= 1">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <div class="slide-number">{{ i + 1 }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Editor -->
+        <div class="slide-editor">
+          <mat-toolbar class="slide-toolbar">
+            <mat-form-field appearance="outline" class="background-color-field">
+              <mat-label>Background Color</mat-label>
+              <input matInput type="color" 
+                     [value]="slides[currentSlideIndex]?.backgroundColor || '#ffffff'"
+                     (change)="onBackgroundColorChange($event)">
+            </mat-form-field>
+          </mat-toolbar>
+          
+          <div class="slide-canvas" *ngIf="slides[currentSlideIndex]"
+               [style.background-color]="slides[currentSlideIndex].backgroundColor">
+            <div class="slide-content">
+              <mat-form-field appearance="outline" class="slide-title-field">
+                <mat-label>Slide Title</mat-label>
+                <input matInput [value]="slides[currentSlideIndex].title"
+                       (input)="onSlideTitleInput($event)">
+              </mat-form-field>
+              
+              <mat-form-field appearance="outline" class="slide-content-field">
+                <mat-label>Slide Content</mat-label>
+                <textarea matInput rows="10" 
+                          [value]="slides[currentSlideIndex].content"
+                          (input)="onSlideContentInput($event)"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Processing document...</p>
+  </div>
+</div>
+
+<!-- Export Menu -->
+<mat-menu #exportMenu="matMenu">
+  <button mat-menu-item (click)="exportDocument('pdf')" *ngIf="currentDocumentType === 'word'">
+    <mat-icon>picture_as_pdf</mat-icon>
+    <span>Export as PDF</span>
+  </button>
+  <button mat-menu-item (click)="exportDocument('csv')" *ngIf="currentDocumentType === 'excel'">
+    <mat-icon>description</mat-icon>
+    <span>Export as CSV</span>
+  </button>
+  <button mat-menu-item (click)="exportDocument('pdf')" *ngIf="currentDocumentType === 'presentation'">
+    <mat-icon>picture_as_pdf</mat-icon>
+    <span>Export as PDF</span>
+  </button>
+  <button mat-menu-item (click)="saveDocument()">
+    <mat-icon>save</mat-icon>
+    <span>Save Document</span>
+  </button>
+</mat-menu>
